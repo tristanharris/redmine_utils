@@ -16,11 +16,11 @@ class RedmineClient
 	end
 
 	def put(url, data)
-		puts "http://#{API_KEY}@#{SERVER}#{url}.json", data
+		#puts "http://#{API_KEY}@#{SERVER}#{url}.json", data
 		RestClient.put("http://#{API_KEY}@#{SERVER}#{url}.json", data, :content_type => :json, :accept => :json) do |response, request, result|
-			puts response.code
-			puts response.inspect
-			$r=[request,response,result]
+			#puts response.code
+			#puts response.inspect
+			#$r=[request,response,result]
 		end
 	end
 
@@ -51,12 +51,11 @@ class WikiPage
 	end
 
 	def save
-		Client.put("/projects/drthom/wiki/#{title}", {'wiki_page' => {'text' => text}})
+		Client.put("/projects/drthom/wiki/#{title}", {'wiki_page' => {'text' => text, 'version' => version}})
 	end
 
 	private
 	def load(title)
-		puts 'loading'
 		Client.get("/projects/drthom/wiki/#{title}")['wiki_page']
 	end
 
