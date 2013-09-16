@@ -4,11 +4,14 @@ require 'rest_client'
 require 'json'
 require 'date'
 require 'active_support/core_ext/time/conversions'
+require 'yaml'
+
+Config = YAML.load_file('config.yml')
 
 class Issue
 	
 	def self.find(id)
-		new(JSON.parse(RestClient.get("http://API_KEY@SERVER/issues/#{id}.json"))['issue'])
+		new(JSON.parse(RestClient.get("http://#{Config[:api_key]}@#{Config[:server]}/issues/#{id}.json"))['issue'])
 	end
 
 	def initialize(data)
@@ -28,7 +31,7 @@ class Issue
 	end
 
 	def log_time(time)
-		RestClient.post("http://API_KEY@SERVER/issues/#{id}/time_entries.json", time.to_json, :content_type => :json, :accept => :json)
+		RestClient.post("http://#{Config[:api_key]}@#{Config[:server]}/issues/#{id}/time_entries.json", time.to_json, :content_type => :json, :accept => :json)
 	end
 
 end

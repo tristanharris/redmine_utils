@@ -2,6 +2,10 @@ require "rubygems"
 require 'rfusefs'
 include FuseFS
 require './wiki'
+require 'yaml'
+
+Config = YAML.load_file('config.yml')
+Client = RedmineClient.new(Config[:server], Config[:api_key])
 
 class RedFS < FuseFS::FuseDir
 

@@ -2,9 +2,6 @@ require 'rubygems'
 require 'rest_client'
 require 'json'
 
-API_KEY = 'API_KEY'
-SERVER = 'SERVER'
-
 class RedmineClient
 
 	def initialize(server, api_key)
@@ -12,12 +9,12 @@ class RedmineClient
 	end
 
 	def get(url)
-		JSON.parse RestClient.get("http://#{API_KEY}@#{SERVER}#{url}.json")
+		JSON.parse RestClient.get("http://#{@api_key}@#{@server}#{url}.json")
 	end
 
 	def put(url, data)
 		#puts "http://#{API_KEY}@#{SERVER}#{url}.json", data
-		RestClient.put("http://#{API_KEY}@#{SERVER}#{url}.json", data, :content_type => :json, :accept => :json) do |response, request, result|
+		RestClient.put("http://#{@api_key}@#{@server}#{url}.json", data, :content_type => :json, :accept => :json) do |response, request, result|
 			#puts response.code
 			#puts response.inspect
 			#$r=[request,response,result]
@@ -67,6 +64,3 @@ class WikiPage
 
 end
 
-Client = RedmineClient.new(SERVER, API_KEY)
-
-#puts WikiPage.all().inspect
